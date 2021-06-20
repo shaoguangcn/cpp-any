@@ -90,3 +90,50 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+#### Compatible
+```cpp
+
+/** cplusplus-standard version number. */
+#ifdef _MSVC_LANG
+#   define CPLUSPLUS__      _MSVC_LANG
+#else
+#   define CPLUSPLUS__      __cplusplus
+#endif /* _MSVC_LANG */
+
+#if DCMNET_HAS_STDANY
+#   include <any>
+#else
+#   include "any.h"
+#endif
+
+#if CPLUSPLUS__ > 201402L
+#   if (defined(_MSC_VER) && _MSC_VER >= 1910) || \
+       (defined(__GNUC__) && __GNUC__ >= 7) || \
+       (defined(__clang__) && __clang_major__ >= 4)
+/* std::any */
+#       define HAS_STDANY__
+#endif
+
+namespace user_ns {
+
+#if defined(HAS_STDANY__)
+
+using user_any = std::any;
+using std::bad_any_cast;
+using std::any_cast;
+using std::make_any;
+using std::swap;
+
+#else
+
+using user_any = any;
+using bad_any_cast;
+using any_cast;
+using make_any;
+using swap;
+
+#endif // !has std::any.
+
+} // namespace dcmnet
+```
