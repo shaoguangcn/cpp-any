@@ -139,7 +139,7 @@ public:
     virtual const char* what() const noexcept;
 };
 
-inline void throw_bad_any_cast()
+[[noreturn]] inline void throw_bad_any_cast()
 {
     throw bad_any_cast{};
 }
@@ -238,7 +238,7 @@ public:
         typename Mgr = Manager<_Tp>,
         _any_constructible_t<_Tp, _ValueType&&> = true,
         typename std::enable_if<!detail::_is_in_place_type<_Tp>::value, bool>::type = true>
-        explicit any(_ValueType&& value)
+        any(_ValueType&& value)
         : m_manager(&Mgr::S_manage)
     {
         Mgr::S_create(m_storage, std::forward<_ValueType>(value));
@@ -252,7 +252,7 @@ public:
         typename std::enable_if<detail::_and_v<std::is_copy_constructible<_Tp>,
         detail::_not<std::is_constructible<_Tp, _ValueType&&>>,
         detail::_not<detail::_is_in_place_type<_Tp>>>(), bool>::value = false>
-        explicit any(_ValueType&& value)
+        any(_ValueType&& value)
         : m_manager(&Mgr::S_manage)
     {
         Mgr::S_create(m_storage, value);
