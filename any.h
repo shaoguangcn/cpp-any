@@ -361,7 +361,8 @@ public:
     //
 
     /**
-     * bool has_value() const noexcept
+     * Checks whether the object contains a value.
+     * \return \c true if instance contains a value, otherwise \c false. 
      */
     bool has_value() const noexcept;
 
