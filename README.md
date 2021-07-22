@@ -10,6 +10,8 @@ std::any是C++17标准才实现的类。若编译器不支持C++17标准，而�
 
 #### Example
 
+- Normal usage
+
 ```cpp
 #include <any.h>
 #include <iostream>
@@ -64,6 +66,35 @@ bad any_cast
 i
 no value
 1 
+```
+
+- Custom data structure 
+
+```cpp
+#include "any.h"
+#include <iostream>
+ 
+struct Point
+{
+    double x{ 0.0 };
+    double y{ 0.0 };
+};
+ 
+int main(int argc, char* argv[])
+{
+    any a = Point{ 1.0, 2.0 };
+ 
+    Point pt = any_cast<Point>(a);
+    std::cout << pt.x << std::endl;
+    std::cout << pt.y << std::endl;
+ 
+    return 0;
+}
+```
+Possible output: 
+```
+1
+2
 ```
 
 #### Compatible
