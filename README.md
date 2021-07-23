@@ -8,13 +8,31 @@ std::any是C++17标准才实现的类。若编译器不支持C++17标准，而�
 #### 要求
 编译器要求至少支持C++11标准。
 
+#### 目录结构
+```
+./cpp-any
+├── doc         # 文档目录
+│   └── html    # doxygen生成的html文档
+└── tools   
+    └── qt      # QT工程
+
+```
+
 #### Example
 
-- Normal usage
-
 ```cpp
-#include <any.h>
+#include "any.h"
 #include <iostream>
+
+#include <any>
+
+struct Point
+{
+    Point() = default;
+    Point(double _x, double _y) : x(_x), y(_y) { }
+    double x{ 0.0 };
+    double y{ 0.0 };
+};
 
 int main(int, char*[])
 {
@@ -53,6 +71,11 @@ int main(int, char*[])
     int* i = any_cast<int>(&a);
     std::cout << *i << "\n";
 
+    any any_pt = Point(10.0, 20.0);
+    Point pt = any_cast<Point>(any_pt);
+    std::cout << "Point.x=" << pt.x << std::endl;
+    std::cout << "Point.y=" << pt.y << std::endl;
+
     return 0;
 }
 ```
@@ -65,39 +88,17 @@ b: true
 bad any_cast
 i
 no value
-1 
-```
-
-- Custom data structure 
-
-```cpp
-#include "any.h"
-#include <iostream>
- 
-struct Point
-{
-    double x{ 0.0 };
-    double y{ 0.0 };
-};
- 
-int main(int argc, char* argv[])
-{
-    any a = Point{ 1.0, 2.0 };
- 
-    Point pt = any_cast<Point>(a);
-    std::cout << pt.x << std::endl;
-    std::cout << pt.y << std::endl;
- 
-    return 0;
-}
-```
-Possible output: 
-```
 1
-2
+Point.x=10
+Point.y=20
 ```
 
-#### Compatible
+#### 与std::any兼容
+
+在自定义命名空间中，兼容不同C++标准。
+- C++11 - C++14标准使用自实现any类
+- C++17及以后标准使用std::any类
+
 ```cpp
 
 /** cplusplus-standard version number. */
@@ -143,6 +144,9 @@ using swap;
 
 } // namespace dcmnet
 ```
+
+#### API文档
+克隆此仓库后, 使用浏览器打开 doc 目录下的 cpp-any-doc.html 文件。
 
 #### License
 ```

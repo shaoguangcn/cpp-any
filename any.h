@@ -153,6 +153,8 @@ public:
  * Two states are equivalent if they are either both empty or if both are not empty and if the contained objects are equivalent.
  *
  * The non-member any_cast functions provide type-safe access to the contained object.
+ *
+ * \sa make_any(), any_cast()
  */
 class any
 {
@@ -213,14 +215,33 @@ public:
 
     /**
      * Default constructor, creates an empty object.
+     *
+     * \note Because the default constructor is constexpr, static anys are initialized as part
+     * of [static non-local initialization](https://en.cppreference.com/w/cpp/language/initialization),
+     * before any dynamic non-local initialization begins. This makes it safe to use an object of
+     * type any in a constructor of any static object.
      */
     constexpr any() noexcept;
+
     /**
-     * Copy constructor, copies the state of \a other
+     * Copies content of \a other into a new instance, so that any content is equivalent in both type
+     * and value to those of \a other prior to the constructor call, or empty if \a other is empty.
+     *
+     * Formally, If \a other is empty, the constructed object is empty. Otherwise, equivalent
+     * to <code>any(std::in_place_type<T>, std::any_cast<const T&>(other))</code>,
+     * where \c T is the type of the object contained in \a other.
+     *
+     * \exception Throws any exception thrown by the constructor of the contained type.
      */
     any(const any& other);
+
     /**
-     * Move constructor, transfer the state from \a other.
+     * Moves content of \a other into a new instance, so that any content is equivalent in both type
+     * and value to those of \a other prior to the constructor call, or empty if \a other is empty.
+     *
+     * Formally, If \a other is empty, the constructed object is empty. Otherwise, the constructed
+     * object contains either the object contained in other, or an object of the same type constructed
+     * from the object contained in other, considering that object as an rvalue.
      */
     any(any&& other) noexcept;
 
@@ -232,7 +253,16 @@ public:
     using _any_constructible_t = typename _any_constructible<bool, _Tp, _Args...>::type;
 
     /**
-     * Construct with a copy of \a value as the contained object.
+     * Constructs an object with initial content an object of type \c std::decay_t<_ValueType> ,
+     * [direct-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * std::forward<_ValueType>(value). If std::is_copy_constructible<std::decay_t<_ValueType>>::value
+     * is false, the program is ill-formed.
+     *
+     * - This overload only participates in overload resolution if \c std::decay_t<_ValueType> is not
+     * the same type as any nor a specialization of \c std::in_place_type_t ,
+     * and \c std::is_copy_constructible_v<std::decay_t<_ValueType>> is true.
+     *
+     * \exception Throws any exception thrown by the constructor of the contained type.
      */
     template <typename _ValueType, typename _Tp = Decay<_ValueType>,
         typename Mgr = Manager<_Tp>,
@@ -245,7 +275,16 @@ public:
     }
 
     /**
-     * Construct with a copy of \a value as the contained object.
+     * Constructs an object with initial content an object of type \c std::decay_t<_ValueType> ,
+     * [direct-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * std::forward<_ValueType>(value). If std::is_copy_constructible<std::decay_t<_ValueType>>::value
+     * is false, the program is ill-formed.
+     *
+     * - This overload only participates in overload resolution if \c std::decay_t<_ValueType> is not
+     * the same type as any nor a specialization of \c std::in_place_type_t ,
+     * and \c std::is_copy_constructible_v<std::decay_t<_ValueType>> is true.
+     *
+     * \exception Throws any exception thrown by the constructor of the contained type.
      */
     template <typename _ValueType, typename _Tp = Decay<_ValueType>,
         typename Mgr = Manager<_Tp>,
@@ -259,7 +298,15 @@ public:
     }
 
     /**
-     * Construct with an object created from @p __args as the contained object.
+     * Constructs an object with initial content an object of type \c std::decay_t<_ValueType> ,
+     * [direct-non-list-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * \c std::forward<Args>(args)....
+     *
+     * - This overload only participates in overload resolution if
+     * <code>std::is_constructible_v<std::decay_t<_ValueType>, Args...></code> and
+     * \c std::is_copy_constructible_v<std::decay_t<_ValueType>> are both true.
+     *
+     * \exception Throws any exception thrown by the constructor of the contained type.
      */
     template <typename _ValueType, typename... _Args,
         typename _Tp = Decay<_ValueType>,
@@ -273,6 +320,16 @@ public:
 
     /**
      * Construct with an object created from \a list and \a args as the contained object.
+     *
+     * Constructs an object with initial content an object of type std::decay_t<_ValueType>,
+     * [direct-non-list-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * \a list, </code>std::forward<_Args>(args)....</code>
+     *
+     * - This overload participates in overload resolution only if <code>std::is_constructible_v<std::decay_t<_ValueType></code>,
+     * <code>std::initializer_list<_Up>&, _Args...></code> and
+     * <code>std::is_copy_constructible_v<std::decay_t<_ValueType>></code> are both true.
+     *
+     * \exception Throws any exception thrown by the constructor of the contained type.
      */
     template <typename _ValueType, typename _Up, typename... _Args,
         typename _Tp = Decay<_ValueType>, typename Mgr = Manager<_Tp>,
@@ -284,7 +341,7 @@ public:
     }
 
     /**
-     * Destructor, calls \c reset()
+     * Destroys the contained object, if any, as if by a call to reset().
      */
     ~any();
 
@@ -293,19 +350,29 @@ public:
     //
 
     /**
-     * Copy the state of another object.
+     *  Assigns by copying the state of \a rhs, as if by any(rhs).swap(*this).
+     *
+     *  \exception bad_alloc or any exception thrown by the constructor of the contained type.
+     *  If an exception is thrown, there are no effects (strong exception guarantee).
      */
     any& operator=(const any& rhs);
 
     /**
-     * Move assignment operator
-     *
-     * \note \c !rhs.has_value() (not guaranteed for other implementations)
+     * Assigns by moving the state of \a rhs, as if by any(std::move(rhs)).swap(*this).
+     * \a rhs is left in a valid but unspecified state after the assignment.
      */
     any& operator=(any&& rhs) noexcept;
 
     /**
-     * Store a copy of \a rhs as the contained object.
+     * Assigns the type and value of rhs, as if by <code>any(std::forward<_ValueType>(rhs)).swap(*this)</code>.
+     * This overload participates in overload resolution only if \c std::decay_t<_ValueType> is not the same
+     * type as any and <code>std::is_copy_constructible_v<std::decay_t<_ValueType>></code> is true.
+     *
+     * \exception bad_alloc or any exception thrown by the constructor of the contained type.
+     * If an exception is thrown, there are no effects (strong exception guarantee).
+     *
+     * \note \c std::decay_t<_ValueType> must meet the requirements of
+     * [CopyConstructible](https://en.cppreference.com/w/cpp/named_req/CopyConstructible).
      */
     template<typename _ValueType>
     typename std::enable_if<std::is_copy_constructible<Decay<_ValueType>>::value, any&>::type
@@ -316,7 +383,21 @@ public:
     }
 
     /**
-     * Emplace with an object created from @p __args as the contained object.
+     * Changes the contained object to one of type \c std::decay_t<_ValueType> constructed from the arguments.
+     * First destroys the current contained object (if any) by reset(), then:
+     * constructs an object of type std::decay_t<_ValueType>,
+     * [direct-non-list-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * <code>std::forward<Args>(args)...</code>, as the contained object.
+     *
+     * - This overload only participates in overload resolution if
+     * <code>std::is_constructible_v<std::decay_t<_ValueType>, _Args...></code> and
+     * <code>std::is_copy_constructible_v<std::decay_t<_ValueType>></code> are both true.
+     *
+     * \exception Throws any exception thrown by T's constructor. If an exception is thrown,
+     * the previously contained object (if any) has been destroyed, and *this does not contain a value.
+     *
+     * \note \c std::decay_t<_ValueType> must meet the requirements of
+     * [CopyConstructible](https://en.cppreference.com/w/cpp/named_req/CopyConstructible).
      */
     template <typename _ValueType, typename... _Args>
     typename _any_constructible<Decay<_ValueType>&, Decay<_ValueType>, _Args&&...>::type
@@ -329,7 +410,21 @@ public:
     }
 
     /**
-     * Emplace with an object created from \a list and\a args as the contained object.
+     * Changes the contained object to one of type \c std::decay_t<_ValueType> constructed from the arguments.
+     * First destroys the current contained object (if any) by reset(), then:
+     * constructs an object of type <code>std::decay_t<_ValueType></code>,
+     * [direct-non-list-initialized](https://en.cppreference.com/w/cpp/language/direct_initialization) from
+     * \a list, <code>std::forward<_Args>(args)...</code>, as the contained object.
+     *
+     * - This overload only participates in overload resolution if
+     * <code>std::is_constructible_v<std::decay_t<_ValueType>, std::initializer_list<_Up>&, _Args...></code> and
+     * <code>std::is_copy_constructible_v<std::decay_t<_ValueType>></code> are both true.
+     *
+     * \exception Throws any exception thrown by T's constructor. If an exception is thrown,
+     * the previously contained object (if any) has been destroyed, and *this does not contain a value.
+     *
+     * \note \c std::decay_t<_ValueType> must meet the requirements of
+     * [CopyConstructible](https://en.cppreference.com/w/cpp/named_req/CopyConstructible).
      */
     template <typename _ValueType, typename _Up, typename... _Args>
     typename _any_constructible<Decay<_ValueType>&, Decay<_ValueType>,
@@ -352,7 +447,7 @@ public:
     void reset() noexcept;
 
     /**
-     * Exchange state with another object.
+     * Swaps the content of two any objects.
      */
     void swap(any& rhs) noexcept;
 
@@ -362,13 +457,16 @@ public:
 
     /**
      * Checks whether the object contains a value.
+     *
      * \return \c true if instance contains a value, otherwise \c false. 
      */
     bool has_value() const noexcept;
 
 #if __cpp_rtti
     /**
-     * The \c typeid of the contained object, or \c typeid(void) if empty.
+     * Returns the typeid of the contained value.
+     *
+     * \return The typeid of the contained value if instance is non-empty, otherwise \c typeid(void).
      */
     const std::type_info& type() const noexcept;
 #endif
@@ -442,15 +540,17 @@ private:
 };
 
 /**
- * Exchange the states of two \a any objects.
+ * Swaps the content of two any objects by calling <code> lhs.swap(rhs) </code>.
  */
-inline void swap(any& x, any& y) noexcept
+inline void swap(any& lhs, any& rhs) noexcept
 {
-    x.swap(y);
+    lhs.swap(rhs);
 }
 
 /**
- * Create an any holding a \c _Tp constructed from \a args.
+ * Constructs an any object containing an object of type _Tp, passing the provided arguments to _Tp's constructor.
+ *
+ * Equivalent to return <code> any(std::in_place_type<_Tp>, std::forward<_Args>(args)...); </code>
  */
 template <typename _Tp, typename... _Args>
 any make_any(_Args&&... args)
@@ -460,7 +560,10 @@ any make_any(_Args&&... args)
 }
 
 /**
- * Create an any holding a \c _Tp constructed from \a list and \a args.
+ * Constructs an any object containing an object of type _Tp, passing the provided arguments to _Tp's constructor.
+ *
+ * Equivalent to <code> return std::any(std::in_place_type<_Tp>, list, std::forward<_Args>(args)...); </code>
+
  */
 template <typename _Tp, typename _Up, typename... _Args>
 any make_any(std::initializer_list<_Up> list, _Args&&... args)
@@ -469,25 +572,25 @@ any make_any(std::initializer_list<_Up> list, _Args&&... args)
 }
 
 /**
- * Access the contained object.
+ * Performs type-safe access to the contained object.
  *
- * \tparam _ValueType A const-reference or CopyConstructible type.
- * \param  a The object to access.
- * \return The contained object.
- * \throw  bad_any_cast If
- *         \code
- *             a.type() != typeid(remove_reference_t<_ValueType>)
- *         \endcode
+ * Let U be <code> std::remove_cv_t<std::remove_reference_t<_ValueType>> </code>.
+ *
+ * The program is ill-formed if <code>std::is_constructible_v<_ValueType, const U&></code> is false.
+ *
+ * \exception bad_any_cast if the typeid of the requested _ValueType does not match that of the contents of \a operand.
+ *
+ * \return static_cast<_ValueType>(*any_cast<U>(&operand))
  */
 template<typename _ValueType>
-inline _ValueType any_cast(const any& a)
+inline _ValueType any_cast(const any& operand)
 {
     using _Up = typename std::remove_cv<_ValueType>::type;
     static_assert(any::_is_valid_cast<_ValueType>(),
         "Template argument must be a reference or CopyConstructible type");
     static_assert(std::is_constructible<_ValueType, const _Up&>::value,
         "Template argument must be constructible from a const value.");
-    auto resultp = any_cast<_Up>(&a);
+    auto resultp = any_cast<_Up>(&operand);
     if (resultp) {
         return static_cast<_ValueType>(*resultp);
     }
@@ -495,40 +598,52 @@ inline _ValueType any_cast(const any& a)
 }
 
 /**
- * Access the contained object.
+ * Performs type-safe access to the contained object.
  *
- * \tparam _ValueType A const-reference or CopyConstructible type.
- * \param  a The object to access.
- * \return The contained object.
- * \throw  bad_any_cast If
- *         \code
- *             a.type() != typeid(remove_reference_t<_ValueType>)
- *         \endcode
+ * Let U be <code> std::remove_cv_t<std::remove_reference_t<_ValueType>> </code>.
+ *
+ * The program is ill-formed if <code>std::is_constructible_v<_ValueType, U&></code> is false.
+ *
+ * \exception bad_any_cast if the typeid of the requested _ValueType does not match that of the contents of \a operand.
+ *
+ * \return static_cast<_ValueType>(*any_cast<U>(&operand))
  */
 template<typename _ValueType>
-inline _ValueType any_cast(any& a)
+inline _ValueType any_cast(any& operand)
 {
     using _Up = typename std::remove_cv<_ValueType>::type;
     static_assert(any::_is_valid_cast<_ValueType>(),
         "Template argument must be a reference or CopyConstructible type");
     static_assert(std::is_constructible<_ValueType, _Up&>::value,
         "Template argument must be constructible from an lvalue.");
-    auto resultp = any_cast<_Up>(&a);
+    auto resultp = any_cast<_Up>(&operand);
     if (resultp) {
         return static_cast<_ValueType>(*resultp);
     }
     throw_bad_any_cast();
 }
 
+/**
+ * Performs type-safe access to the contained object.
+ *
+ * Let U be <code> std::remove_cv_t<std::remove_reference_t<_ValueType>> </code>.
+ *
+ * The program is ill-formed if <code>std::is_constructible_v<_ValueType, U></code> is false.
+ *
+ * \exception bad_any_cast if the typeid of the requested _ValueType does not match that of the contents of \a operand.
+ *
+ * \return static_cast<_ValueType>(std::move(*any_cast<U>(&operand))).
+
+ */
 template<typename _ValueType>
-inline _ValueType any_cast(any&& a)
+inline _ValueType any_cast(any&& operand)
 {
     using _Up = typename std::remove_cv<_ValueType>::type;
     static_assert(any::_is_valid_cast<_ValueType>(),
         "Template argument must be a reference or CopyConstructible type");
     static_assert(std::is_constructible<_ValueType, _Up>::value,
         "Template argument must be constructible from an rvalue.");
-    auto resultp = any_cast<_Up>(&a);
+    auto resultp = any_cast<_Up>(&operand);
     if (resultp) {
         return static_cast<_ValueType>(std::move(*resultp));
     }
@@ -567,35 +682,34 @@ void* _any_caster(const any* a)
 /// @endcond
 
 /**
- * Access the contained object.
+ * Performs type-safe access to the contained object.
  *
- * \tparam _ValueType A const-reference or CopyConstructible type.
- * \param  a The object to access.
- * \return The contained object.
- * \throw  bad_any_cast If
- *         \code
- *             a != nullptr && a.type() == typeid(_ValueType)
- *         \endcode
- *
- * @{
+ * \return If operand is not a null pointer, and the typeid of the requested \c _ValueType matches that
+ * of the contents of \a operand, a pointer to the value contained by \a operand, otherwise a null pointer.
  */
 template<typename _ValueType>
-inline const _ValueType* any_cast(const any* a) noexcept
+inline const _ValueType* any_cast(const any* operand) noexcept
 {
     if (std::is_object<_ValueType>::value) {
-        if (a) {
-            return static_cast<_ValueType*>(_any_caster<_ValueType>(a));
+        if (operand) {
+            return static_cast<_ValueType*>(_any_caster<_ValueType>(operand));
         }
     }
     return nullptr;
 }
 
+/**
+ * Performs type-safe access to the contained object.
+ *
+ * \return If operand is not a null pointer, and the typeid of the requested \c _ValueType matches that
+ * of the contents of \a operand, a pointer to the value contained by \a operand, otherwise a null pointer.
+ */
 template<typename _ValueType>
-inline _ValueType* any_cast(any* __any) noexcept
+inline _ValueType* any_cast(any* operand) noexcept
 {
     if (std::is_object<_ValueType>::value) {
-        if (__any) {
-            return static_cast<_ValueType*>(_any_caster<_ValueType>(__any));
+        if (operand) {
+            return static_cast<_ValueType*>(_any_caster<_ValueType>(operand));
         }
     }
     return nullptr;

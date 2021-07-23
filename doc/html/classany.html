@@ -23,6 +23,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">cpp-any
    </div>
+   <div id="projectbrief">Implementation of std::any class of C++17 standard under C++11 standard</div>
   </td>
  </tr>
  </tbody>
@@ -80,13 +81,11 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a3d182c219b62132a93463ebf6831b8e2"><td class="memTemplParams" colspan="2"><a id="a3d182c219b62132a93463ebf6831b8e2"></a>
-template&lt;typename _Res , typename _Tp , typename... _Args&gt; </td></tr>
-<tr class="memitem:a3d182c219b62132a93463ebf6831b8e2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_any_constructible</b> = std::enable_if&lt; <a class="el" href="structdetail_1_1__and.html">detail::_and</a>&lt; std::is_copy_constructible&lt; _Tp &gt;, std::is_constructible&lt; _Tp, _Args... &gt; &gt;::value, _Res &gt;</td></tr>
+<tr class="memitem:a3d182c219b62132a93463ebf6831b8e2"><td class="memTemplParams" colspan="2">template&lt;typename _Res , typename _Tp , typename... _Args&gt; </td></tr>
+<tr class="memitem:a3d182c219b62132a93463ebf6831b8e2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a> = std::enable_if&lt; <a class="el" href="structdetail_1_1__and.html">detail::_and</a>&lt; std::is_copy_constructible&lt; _Tp &gt;, std::is_constructible&lt; _Tp, _Args... &gt; &gt;::value, _Res &gt;</td></tr>
 <tr class="separator:a3d182c219b62132a93463ebf6831b8e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06286b297dc737d020cce31a2cc65a22"><td class="memTemplParams" colspan="2"><a id="a06286b297dc737d020cce31a2cc65a22"></a>
-template&lt;typename _Tp , typename... _Args&gt; </td></tr>
-<tr class="memitem:a06286b297dc737d020cce31a2cc65a22"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_any_constructible_t</b> = typename _any_constructible&lt; bool, _Tp, _Args... &gt;::type</td></tr>
+<tr class="memitem:a06286b297dc737d020cce31a2cc65a22"><td class="memTemplParams" colspan="2">template&lt;typename _Tp , typename... _Args&gt; </td></tr>
+<tr class="memitem:a06286b297dc737d020cce31a2cc65a22"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#a06286b297dc737d020cce31a2cc65a22">_any_constructible_t</a> = typename <a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt; bool, _Tp, _Args... &gt;::type</td></tr>
 <tr class="separator:a06286b297dc737d020cce31a2cc65a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -119,10 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af5a318ea7b956c2423a75b425b989745"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; std::is_copy_constructible&lt; Decay&lt; _ValueType &gt; &gt;::value, <a class="el" href="classany.html">any</a> &amp; &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#af5a318ea7b956c2423a75b425b989745">operator=</a> (_ValueType &amp;&amp;rhs)</td></tr>
 <tr class="separator:af5a318ea7b956c2423a75b425b989745"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a556c0d011680e51682b42650128c85cb"><td class="memTemplParams" colspan="2">template&lt;typename _ValueType , typename... _Args&gt; </td></tr>
-<tr class="memitem:a556c0d011680e51682b42650128c85cb"><td class="memTemplItemLeft" align="right" valign="top">_any_constructible&lt; Decay&lt; _ValueType &gt; &amp;, Decay&lt; _ValueType &gt;, _Args &amp;&amp;... &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#a556c0d011680e51682b42650128c85cb">emplace</a> (_Args &amp;&amp;... args)</td></tr>
+<tr class="memitem:a556c0d011680e51682b42650128c85cb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt; Decay&lt; _ValueType &gt; &amp;, Decay&lt; _ValueType &gt;, _Args &amp;&amp;... &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#a556c0d011680e51682b42650128c85cb">emplace</a> (_Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a556c0d011680e51682b42650128c85cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0f399ff0e47c7bf5a52ca5c565d7053"><td class="memTemplParams" colspan="2">template&lt;typename _ValueType , typename _Up , typename... _Args&gt; </td></tr>
-<tr class="memitem:ac0f399ff0e47c7bf5a52ca5c565d7053"><td class="memTemplItemLeft" align="right" valign="top">_any_constructible&lt; Decay&lt; _ValueType &gt; &amp;, Decay&lt; _ValueType &gt;, std::initializer_list&lt; _Up &gt;, _Args &amp;&amp;... &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#ac0f399ff0e47c7bf5a52ca5c565d7053">emplace</a> (std::initializer_list&lt; _Up &gt; list, _Args &amp;&amp;... args)</td></tr>
+<tr class="memitem:ac0f399ff0e47c7bf5a52ca5c565d7053"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt; Decay&lt; _ValueType &gt; &amp;, Decay&lt; _ValueType &gt;, std::initializer_list&lt; _Up &gt;, _Args &amp;&amp;... &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#ac0f399ff0e47c7bf5a52ca5c565d7053">emplace</a> (std::initializer_list&lt; _Up &gt; list, _Args &amp;&amp;... args)</td></tr>
 <tr class="separator:ac0f399ff0e47c7bf5a52ca5c565d7053"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4a11253f803d135685e115cf7054d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classany.html#a6c4a11253f803d135685e115cf7054d8">reset</a> () noexcept</td></tr>
 <tr class="separator:a6c4a11253f803d135685e115cf7054d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,23 +132,61 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae6a947b5553c63a8723946bf102ac1ee"><td class="memTemplParams" colspan="2"><a id="ae6a947b5553c63a8723946bf102ac1ee"></a>
-template&lt;typename _Tp &gt; </td></tr>
-<tr class="memitem:ae6a947b5553c63a8723946bf102ac1ee"><td class="memTemplItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_is_valid_cast</b> ()</td></tr>
+<tr class="memitem:ae6a947b5553c63a8723946bf102ac1ee"><td class="memTemplParams" colspan="2">template&lt;typename _Tp &gt; </td></tr>
+<tr class="memitem:ae6a947b5553c63a8723946bf102ac1ee"><td class="memTemplItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#ae6a947b5553c63a8723946bf102ac1ee">_is_valid_cast</a> ()</td></tr>
 <tr class="separator:ae6a947b5553c63a8723946bf102ac1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:ab8ee13016b3a7225d73b9b580c8d29b0"><td class="memTemplParams" colspan="2"><a id="ab8ee13016b3a7225d73b9b580c8d29b0"></a>
-template&lt;typename _Tp &gt; </td></tr>
-<tr class="memitem:ab8ee13016b3a7225d73b9b580c8d29b0"><td class="memTemplItemLeft" align="right" valign="top">void *&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_any_caster</b> (const <a class="el" href="classany.html">any</a> *__any)</td></tr>
+<tr class="memitem:ab8ee13016b3a7225d73b9b580c8d29b0"><td class="memTemplParams" colspan="2">template&lt;typename _Tp &gt; </td></tr>
+<tr class="memitem:ab8ee13016b3a7225d73b9b580c8d29b0"><td class="memTemplItemLeft" align="right" valign="top">void *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classany.html#ab8ee13016b3a7225d73b9b580c8d29b0">_any_caster</a> (const <a class="el" href="classany.html">any</a> *__any)</td></tr>
 <tr class="separator:ab8ee13016b3a7225d73b9b580c8d29b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The class any describes a type-safe container for single values of any type. </p>
 <p>An object of class any stores an instance of any type that satisfies the constructor requirements or is empty, and this is referred to as the state of the class any object. The stored instance is called the contained object. Two states are equivalent if they are either both empty or if both are not empty and if the contained objects are equivalent.</p>
-<p>The non-member any_cast functions provide type-safe access to the contained object. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p>The non-member any_cast functions provide type-safe access to the contained object.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="any_8h.html#af597db5576048a3aefd30ec700d36339">make_any()</a>, <a class="el" href="any_8h.html#a7686efd7fbdd733ca3fe088e719c0da8">any_cast()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00159">159</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a3d182c219b62132a93463ebf6831b8e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d182c219b62132a93463ebf6831b8e2">&#9670;&nbsp;</a></span>_any_constructible</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename _Res , typename _Tp , typename... _Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">any::_any_constructible</a> =  std::enable_if&lt;<a class="el" href="structdetail_1_1__and.html">detail::_and</a>&lt;std::is_copy_constructible&lt;_Tp&gt;, std::is_constructible&lt;_Tp, _Args...&gt; &gt;::value, _Res&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00250">250</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
+
+</div>
+</div>
+<a id="a06286b297dc737d020cce31a2cc65a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06286b297dc737d020cce31a2cc65a22">&#9670;&nbsp;</a></span>_any_constructible_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename _Tp , typename... _Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classany.html#a06286b297dc737d020cce31a2cc65a22">any::_any_constructible_t</a> =  typename <a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt;bool, _Tp, _Args...&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00253">253</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4807cc2f65c6e677e3f53b39274c9528"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4807cc2f65c6e677e3f53b39274c9528">&#9670;&nbsp;</a></span>any() <span class="overload">[1/7]</span></h2>
 
@@ -172,7 +209,10 @@ template&lt;typename _Tp &gt; </td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Default constructor, creates an empty object. </p>
+<p>Default constructor, creates an empty object.</p>
+<dl class="section note"><dt>Note</dt><dd>Because the default constructor is constexpr, static anys are initialized as part of <a href="https://en.cppreference.com/w/cpp/language/initialization">static non-local initialization</a>, before any dynamic non-local initialization begins. This makes it safe to use an object of type any in a constructor of any static object. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00016">16</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -191,7 +231,16 @@ template&lt;typename _Tp &gt; </td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Copy constructor, copies the state of <em>other</em> </p>
+<p>Copies content of <em>other</em> into a new instance, so that any content is equivalent in both type and value to those of <em>other</em> prior to the constructor call, or empty if <em>other</em> is empty.</p>
+<p>Formally, If <em>other</em> is empty, the constructed object is empty. Otherwise, equivalent to <code><a class="el" href="classany.html" title="The class any describes a type-safe container for single values of any type.">any(std::in_place_type&lt;T&gt;, std::any_cast&lt;const T&amp;&gt;(other))</a></code>, where <code>T</code> is the type of the object contained in <em>other</em>.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by the constructor of the contained type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00020">20</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -218,7 +267,10 @@ template&lt;typename _Tp &gt; </td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Move constructor, transfer the state from <em>other</em>. </p>
+<p>Moves content of <em>other</em> into a new instance, so that any content is equivalent in both type and value to those of <em>other</em> prior to the constructor call, or empty if <em>other</em> is empty.</p>
+<p>Formally, If <em>other</em> is empty, the constructed object is empty. Otherwise, the constructed object contains either the object contained in other, or an object of the same type constructed from the object contained in other, considering that object as an rvalue. </p>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00031">31</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -243,11 +295,22 @@ template&lt;typename _ValueType , typename _Tp  = Decay&lt;_ValueType&gt;, typen
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct with a copy of <em>value</em> as the contained object. </p>
+<p>Constructs an object with initial content an object of type <code>std::decay_t&lt;_ValueType&gt;</code> , <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-initialized</a> from std::forward&lt;_ValueType&gt;(value). If std::is_copy_constructible&lt;std::decay_t&lt;_ValueType&gt;&gt;::value is false, the program is ill-formed.</p>
+<ul>
+<li>This overload only participates in overload resolution if <code>std::decay_t&lt;_ValueType&gt;</code> is not the same type as any nor a specialization of <code>std::in_place_type_t</code> , and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> is true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by the constructor of the contained type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00271">271</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -272,11 +335,22 @@ template&lt;typename _ValueType , typename _Tp  = Decay&lt;_ValueType&gt;, typen
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct with a copy of <em>value</em> as the contained object. </p>
+<p>Constructs an object with initial content an object of type <code>std::decay_t&lt;_ValueType&gt;</code> , <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-initialized</a> from std::forward&lt;_ValueType&gt;(value). If std::is_copy_constructible&lt;std::decay_t&lt;_ValueType&gt;&gt;::value is false, the program is ill-formed.</p>
+<ul>
+<li>This overload only participates in overload resolution if <code>std::decay_t&lt;_ValueType&gt;</code> is not the same type as any nor a specialization of <code>std::in_place_type_t</code> , and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> is true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by the constructor of the contained type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00294">294</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +389,18 @@ template&lt;typename _ValueType , typename... _Args, typename _Tp  = Decay&lt;_V
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct with an object created from <code>__args</code> as the contained object. </p>
+<p>Constructs an object with initial content an object of type <code>std::decay_t&lt;_ValueType&gt;</code> , <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-non-list-initialized</a> from <code>std::forward&lt;Args&gt;(args)</code>....</p>
+<ul>
+<li>This overload only participates in overload resolution if <code>std::is_constructible_v&lt;std::decay_t&lt;_ValueType&gt;, Args...&gt;</code> and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> are both true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by the constructor of the contained type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00315">315</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -360,7 +445,19 @@ template&lt;typename _ValueType , typename _Up , typename... _Args, typename _Tp
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Construct with an object created from <em>list</em> and <em>args</em> as the contained object. </p>
+<p>Construct with an object created from <em>list</em> and <em>args</em> as the contained object.</p>
+<p>Constructs an object with initial content an object of type std::decay_t&lt;_ValueType&gt;, <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-non-list-initialized</a> from <em>list</em>, std::forward&lt;_Args&gt;(args)....</p>
+<ul>
+<li>This overload participates in overload resolution only if <code>std::is_constructible_v&lt;std::decay_t&lt;_ValueType&gt;</code>, <code>std::initializer_list&lt;_Up&gt;&amp;, _Args...&gt;</code> and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> are both true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by the constructor of the contained type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00337">337</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -378,11 +475,42 @@ template&lt;typename _ValueType , typename _Up , typename... _Args, typename _Tp
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Destructor, calls <code><a class="el" href="classany.html#a6c4a11253f803d135685e115cf7054d8">reset()</a></code> </p>
+<p>Destroys the contained object, if any, as if by a call to <a class="el" href="classany.html#a6c4a11253f803d135685e115cf7054d8">reset()</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00042">42</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae6a947b5553c63a8723946bf102ac1ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6a947b5553c63a8723946bf102ac1ee">&#9670;&nbsp;</a></span>_is_valid_cast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename _Tp &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr bool any::_is_valid_cast </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00475">475</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
+
+</div>
+</div>
 <a id="a556c0d011680e51682b42650128c85cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a556c0d011680e51682b42650128c85cb">&#9670;&nbsp;</a></span>emplace() <span class="overload">[1/2]</span></h2>
 
@@ -395,7 +523,7 @@ template&lt;typename _ValueType , typename... _Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">_any_constructible&lt;Decay&lt;_ValueType&gt;&amp;, Decay&lt;_ValueType&gt;, _Args&amp;&amp;...&gt;::type any::emplace </td>
+          <td class="memname"><a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt;Decay&lt;_ValueType&gt;&amp;, Decay&lt;_ValueType&gt;, _Args&amp;&amp;...&gt;::type any::emplace </td>
           <td>(</td>
           <td class="paramtype">_Args &amp;&amp;...&#160;</td>
           <td class="paramname"><em>args</em></td><td>)</td>
@@ -408,7 +536,19 @@ template&lt;typename _ValueType , typename... _Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Emplace with an object created from <code>__args</code> as the contained object. </p>
+<p>Changes the contained object to one of type <code>std::decay_t&lt;_ValueType&gt;</code> constructed from the arguments. First destroys the current contained object (if any) by <a class="el" href="classany.html#a6c4a11253f803d135685e115cf7054d8">reset()</a>, then: constructs an object of type std::decay_t&lt;_ValueType&gt;, <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-non-list-initialized</a> from <code>std::forward&lt;Args&gt;(args)...</code>, as the contained object.</p>
+<ul>
+<li>This overload only participates in overload resolution if <code>std::is_constructible_v&lt;std::decay_t&lt;_ValueType&gt;, _Args...&gt;</code> and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> are both true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by T's constructor. If an exception is thrown, the previously contained object (if any) has been destroyed, and *this does not contain a value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><code>std::decay_t&lt;_ValueType&gt;</code> must meet the requirements of <a href="https://en.cppreference.com/w/cpp/named_req/CopyConstructible">CopyConstructible</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00404">404</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -424,7 +564,7 @@ template&lt;typename _ValueType , typename _Up , typename... _Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">_any_constructible&lt;Decay&lt;_ValueType&gt;&amp;, Decay&lt;_ValueType&gt;, std::initializer_list&lt;_Up&gt;, _Args&amp;&amp;...&gt;::type any::emplace </td>
+          <td class="memname"><a class="el" href="classany.html#a3d182c219b62132a93463ebf6831b8e2">_any_constructible</a>&lt;Decay&lt;_ValueType&gt;&amp;, Decay&lt;_ValueType&gt;, std::initializer_list&lt;_Up&gt;, _Args&amp;&amp;...&gt;::type any::emplace </td>
           <td>(</td>
           <td class="paramtype">std::initializer_list&lt; _Up &gt;&#160;</td>
           <td class="paramname"><em>list</em>, </td>
@@ -447,7 +587,19 @@ template&lt;typename _ValueType , typename _Up , typename... _Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Emplace with an object created from <em>list</em> and<em>args</em> as the contained object. </p>
+<p>Changes the contained object to one of type <code>std::decay_t&lt;_ValueType&gt;</code> constructed from the arguments. First destroys the current contained object (if any) by <a class="el" href="classany.html#a6c4a11253f803d135685e115cf7054d8">reset()</a>, then: constructs an object of type <code>std::decay_t&lt;_ValueType&gt;</code>, <a href="https://en.cppreference.com/w/cpp/language/direct_initialization">direct-non-list-initialized</a> from <em>list</em>, <code>std::forward&lt;_Args&gt;(args)...</code>, as the contained object.</p>
+<ul>
+<li>This overload only participates in overload resolution if <code>std::is_constructible_v&lt;std::decay_t&lt;_ValueType&gt;, std::initializer_list&lt;_Up&gt;&amp;, _Args...&gt;</code> and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> are both true.</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Throws</td><td>any exception thrown by T's constructor. If an exception is thrown, the previously contained object (if any) has been destroyed, and *this does not contain a value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><code>std::decay_t&lt;_ValueType&gt;</code> must meet the requirements of <a href="https://en.cppreference.com/w/cpp/named_req/CopyConstructible">CopyConstructible</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00432">432</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -473,7 +625,10 @@ template&lt;typename _ValueType , typename _Up , typename... _Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>bool <a class="el" href="classany.html#aee1aabbbe7c8e3197605c0f8055e5e5a">has_value() const </a>noexcept </p>
+<p>Checks whether the object contains a value.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if instance contains a value, otherwise <code>false</code>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00103">103</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -502,7 +657,16 @@ template&lt;typename _ValueType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Store a copy of <em>rhs</em> as the contained object. </p>
+<p>Assigns the type and value of rhs, as if by <code><a class="el" href="classany.html" title="The class any describes a type-safe container for single values of any type.">any(std::forward&lt;_ValueType&gt;(rhs))</a>.swap(*this)</code>. This overload participates in overload resolution only if <code>std::decay_t&lt;_ValueType&gt;</code> is not the same type as any and <code>std::is_copy_constructible_v&lt;std::decay_t&lt;_ValueType&gt;&gt;</code> is true.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">bad_alloc</td><td>or any exception thrown by the constructor of the contained type. If an exception is thrown, there are no effects (strong exception guarantee).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><code>std::decay_t&lt;_ValueType&gt;</code> must meet the requirements of <a href="https://en.cppreference.com/w/cpp/named_req/CopyConstructible">CopyConstructible</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8h_source.html#l00379">379</a> of file <a class="el" href="any_8h_source.html">any.h</a>.</p>
 
 </div>
 </div>
@@ -529,8 +693,9 @@ template&lt;typename _ValueType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Move assignment operator</p>
-<dl class="section note"><dt>Note</dt><dd><code>!rhs</code>.<a class="el" href="classany.html#aee1aabbbe7c8e3197605c0f8055e5e5a">has_value()</a> (not guaranteed for other implementations) </dd></dl>
+<p>Assigns by moving the state of <em>rhs</em>, as if by <a class="el" href="classany.html" title="The class any describes a type-safe container for single values of any type.">any(std::move(rhs))</a>.swap(*this). <em>rhs</em> is left in a valid but unspecified state after the assignment. </p>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00053">53</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -549,7 +714,15 @@ template&lt;typename _ValueType &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Copy the state of another object. </p>
+<p>Assigns by copying the state of <em>rhs</em>, as if by <a class="el" href="classany.html" title="The class any describes a type-safe container for single values of any type.">any(rhs)</a>.swap(*this).</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">bad_alloc</td><td>or any exception thrown by the constructor of the contained type. If an exception is thrown, there are no effects (strong exception guarantee). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00047">47</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
 
 </div>
 </div>
@@ -577,6 +750,8 @@ template&lt;typename _ValueType &gt; </div>
 </div><div class="memdoc">
 <p>If not empty, destroy the contained object. </p>
 
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00066">66</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a7b22cb0a30ac185ccc24bdc819497088"></a>
@@ -602,13 +777,44 @@ template&lt;typename _ValueType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Exchange state with another object. </p>
+<p>Swaps the content of two any objects. </p>
+
+<p class="definition">Definition at line <a class="el" href="any_8cpp_source.html#l00074">74</a> of file <a class="el" href="any_8cpp_source.html">any.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ab8ee13016b3a7225d73b9b580c8d29b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8ee13016b3a7225d73b9b580c8d29b0">&#9670;&nbsp;</a></span>_any_caster</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename _Tp &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _any_caster </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classany.html">any</a> *&#160;</td>
+          <td class="paramname"><em>__any</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="any_8h_source.html">any.h</a></li>
-<li>any.cpp</li>
+<li>/home/eric/workspace/git-rep/cpp-any/<a class="el" href="any_8h_source.html">any.h</a></li>
+<li>/home/eric/workspace/git-rep/cpp-any/<a class="el" href="any_8cpp_source.html">any.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

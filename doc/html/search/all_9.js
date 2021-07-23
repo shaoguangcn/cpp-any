@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['what_24',['what',['../classbad__any__cast.html#a2d2581230d8c46e3d861da95fcdb3f2c',1,'bad_any_cast']]]
+  ['readme_2emd_34',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['reset_35',['reset',['../classany.html#a6c4a11253f803d135685e115cf7054d8',1,'any']]]
 ];
